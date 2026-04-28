@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Converter</title>
+
+<style>
+body {background-image: url("mmm.png");
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+header {
+  background: black;
+  color: white;
+  padding: 10px;
+}
+nav {
+  display: flex;            
+  justify-content: flex-end;  
+  gap: 10px;
+  padding: 8px;
+}
+ 
+section {
+  display: none;
+  padding: 20px;
+}
+
+.active {
+  display: block;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.result {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.dark {
+  background-image: url("OIP.webp");
+  color: white;
+}
+
+.dark .card {
+  background: rgb(104, 104, 109);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+           <div style="display:flex; align-items:center; gap:50px;">
+  <img src="logo.png" alt="Logo" style="height:80px;">
+  <h2> team Converter</h2></div>
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('converter')">Converter</button>
+    <button onclick="showPage('details')">Details</button>
+    <button onclick="showPage('history')">History</button>
+    <button onclick="showPage('settings')">Settings</button>
+  </nav>
+</header>
+
+<section id="home" class="active">
+  <div class="card">
+    <h3>Welcome to my website</h3>
+    <p>Welcome to our money conversion platform, your reliable partner for fast and accurate
+       currency exchange.</p>
+       <p>We are committed to providing you with up-to-date exchange rates,
+        easy-to-use tools, and a smooth experience every time you visit.</p>
+<p>Whether you are traveling, doing business, or simply checking rates</p>
+  </div>
+</section>
+<section id="converter">
+  <div class="card">
+    <h3>Full Converter</h3>
+
+    <input type="number" id="amount" placeholder="Amount">
+
+    <select id="from">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="RWF">RWF</option>
+    </select>
+
+    <button onclick="swap()"> Swap</button>
+
+    <select id="to">
+      <option value="RWF">RWF</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+    </select>
+
+    <button onclick="convert()">Convert</button>
+
+    <div id="result" class="result"></div>
+    <div id="rate"></div>
+    <div id="time"></div>
+  </div>
+</section>
+<section id="details">
+  <div class="card">
+    <h3>Currency Details</h3>
+    <p>USD - United States Dollar</p>
+
+    <p>Trend Increasing</p>
+
+    <p>Comparison:</p>
+    <ul>
+      <li>USD → EUR</li>
+      <li>USD → RWF</li>
+    </ul>
+
+    <p>Historical Rates:</p>
+    <ul>
+      <li>2026-04-20: 1200 RWF</li>
+      <li>2026-04-21: 1210 RWF</li>
+      <li>2026-04-22: 1225 RWF</li>
+    </ul>
+  </div>
+</section>
+<section id="history">
+  <div class="card">
+    <h3>History</h3>
+
+    <button onclick="clearHistory()">Clear History</button>
+
+    <ul id="historyList"></ul>
+  </div>
+</section>
+<section id="settings">
+  <div class="card">
+    <h3>Settings</h3>
+
+    <label>Dark Mode</label>
+    <button onclick="toggleDark()">Toggle</button>
+
+    <label>Default Currency</label>
+    <select>
+      <option>USD</option>
+      <option>EUR</option>
+      <option>RWF</option>
+    </select>
+  </div>
+</section>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.getElementById(page).classList.add("active");
+}
+const rates = {
+  USD: { RWF: 1200, EUR: 0.9 },
+  EUR: { USD: 1.1, RWF: 1350 },
+  RWF: { USD: 0.0008, EUR: 0.0007 }
+};
+function convert() {
+  let amt = document.getElementById("amount").value;
+  let from = document.getElementById("from").value;
+  let to = document.getElementById("to").value;
+
+  let result = amt * (rates[from][to] || 1);
+
+  document.getElementById("result").innerText = result.toFixed(2);
+  document.getElementById("rate").innerText = `1 ${from} = ${rates[from][to]} ${to}`;
+  document.getElementById("time").innerText = new Date().toLocaleString();
+
+  saveHistory(`${amt} ${from} → ${to} = ${result.toFixed(2)}`);
+}
+function convertQuick() {
+  let amt = document.getElementById("quickAmount").value;
+  let from = document.getElementById("quickFrom").value;
+  let to = document.getElementById("quickTo").value;
+
+  let result = amt * (rates[from][to] || 1);
+
+  document.getElementById("quickResult").innerText = result.toFixed(2);
+}
+function swap() {
+  let from = document.getElementById("from");
+  let to = document.getElementById("to");
+
+  let temp = from.value;
+  from.value = to.value;
+  to.value = temp;
+}
+
+function saveHistory(entry) {
+  let list = document.getElementById("historyList");
+  let li = document.createElement("li");
+  li.innerText = entry + " (" + new Date().toLocaleString() + ")";
+  list.appendChild(li);
+}
+
+function clearHistory() {
+  document.getElementById("historyList").innerHTML = "";
+}
+function toggleDark() {
+  document.body.classList.toggle("dark");
+}
+</script>
+<footer style="background-color:#111; color:#fff; text-align:center; padding:20px; margin-top:40px;">
+  
+  <p>&copy; 2026 YourWebsiteName. All rights reserved.</p>
+  
+  <p>Address: Kigali, Rwanda</p>
+
+</footer>
+
+</body>

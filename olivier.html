@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruler Health Clinic</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eaeaea;
+    padding: 10px 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+.header h2 {
+    background: yellow;
+    padding: 5px 10px;
+}
+
+.time-box {
+    display: flex;
+    gap: 10px;
+}
+
+.time-box div {
+    background: #2e8b57;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 220px;
+    background: #f0f0f0;
+    padding: 15px;
+    border-right: 1px solid #ccc;
+    height: calc(100vh - 60px);
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sidebar button:hover {
+    background: #ddd;
+}
+
+.sidebar .active {
+    background: #cde8d5;
+    font-weight: bold;
+}
+
+.main {
+    flex: 1;
+    padding: 30px;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 500px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+.btn-green {
+    background: #2e8b57;
+    color: white;
+}
+
+.btn-gray {
+    background: #ddd;
+}
+
+
+.tip {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>Ruler health clinic</h2>
+    <div class="time-box">
+        <div id="date"></div>
+        <div id="time"></div>
+    </div>
+</div>
+
+<div class="container">
+
+   
+    <div class="sidebar">
+        <button class="active" onclick="showSection('dashboard', this)">Dashboard</button>
+        <button onclick="showSection('checkin', this)">Patient Check-in</button>
+        <button onclick="showSection('appointments', this)">Appointments</button>
+        <button onclick="showSection('records', this)">Patient Records</button>
+        <button onclick="showSection('reports', this)">Reports</button>
+        <button onclick="showSection('settings', this)">Settings</button>
+    </div>
+
+   
+    <div class="main">
+
+      
+        <div id="dashboard" class="section active">
+            <h2>Dashboard</h2>
+            <p>Welcome to your clinic dashboard</p>
+        </div>
+
+   
+        <div id="checkin" class="section">
+            <div class="card">
+                <h3>Patient Check-in</h3>
+
+                <input id="name" placeholder="Full Name">
+                <input id="phone" placeholder="Phone Number">
+
+                <label>
+                    <input type="checkbox" id="new"> New Patient
+                </label>
+                <label>
+                    <input type="checkbox" id="returning"> Returning Patient
+                </label>
+
+                <select id="reason">
+                    <option value="">Select reason</option>
+                    <option>Consultation</option>
+                    <option>Check-up</option>
+                    <option>Emergency</option>
+                </select>
+
+                <button class="btn btn-green" onclick="checkIn()">Check-in</button>
+                <button class="btn btn-gray" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+
+        
+        <div id="appointments" class="section">
+            <h2>Appointments</h2>
+            <p>Manage appointments here</p>
+        </div>
+
+        <div id="records" class="section">
+            <h2>Patient Records</h2>
+            <p>View all patient records</p>
+        </div>
+
+        <div id="reports" class="section">
+            <h2>Reports</h2>
+            <p>System reports will appear here</p>
+        </div>
+
+        <div id="settings" class="section">
+            <h2>Settings</h2>
+            <p>System settings</p>
+        </div>
+
+        <!-- Tip -->
+        <div class="tip">
+            <div>i</div>
+            <div>
+                <b>Tip</b><br>
+                Do every activity
+            </div>
+        </div>
+
+        <div class="footer">
+            © Copy light karongi , mubuga pobox99023
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+
+function updateTime() {
+    const now = new Date();
+    document.getElementById("date").innerText = now.toDateString();
+    document.getElementById("time").innerText = now.toLocaleTimeString();
+}
+setInterval(updateTime, 1000);
+updateTime();
+
+
+function checkIn() {
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let reason = document.getElementById("reason").value;
+
+    if (!name || !phone || !reason) {
+        alert("Fill all fields!");
+        return;
+    }
+
+    alert("Patient Checked In!");
+}
+
+function clearForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("reason").value = "";
+    document.getElementById("new").checked = false;
+    document.getElementById("returning").checked = false;
+}
+</script>
+
+</body>
+</html>
