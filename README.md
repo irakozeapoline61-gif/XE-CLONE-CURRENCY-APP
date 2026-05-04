@@ -15,3 +15,4 @@ SCREENSHOOTS:
 <img width="934" height="430" alt="image" src="https://github.com/user-attachments/assets/e0e0aae3-27df-44f2-a0b5-1132f1f2b948" />
 <img width="941" height="396" alt="image" src="https://github.com/user-attachments/assets/596f5da8-c705-4d04-a119-e97ea66ab33e" />
 <img width="935" height="416" alt="image" src="https://github.com/user-attachments/assets/60407d35-e21e-45ed-9c0c-05a0b31c789c" />
+<img width="289" height="317" alt="image" src="https://github.com/user-attachments/assets/4e9c411c-bccd-488f-9300-baa60a97549f" />
