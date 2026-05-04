@@ -1,6 +1,8 @@
+name of student
+1.MITIMITUJE olivier
+2.IRAKOZE apoline
+
 XE-CLONE-CURRENCY-APP  DESCRIPTION:
-
-
 Welcome to our money conversion platform, your reliable partner for fast and accurate currency exchange.
 
 We are committed to providing you with up-to-date exchange rates, easy-to-use tools, and a smooth experience every time you visit.
